@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Operacao</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resultado da Operação</h1>
+
+        <div class="notificacao">
+            {% if tipo == "erro" %}
+                <strong>ERRO:</strong> {{ mensagem }}
+            {% else %}
+                <strong>Sucesso:</strong> {{ mensagem }}
+            {% endif %}
+        </div>
+
+        {% if notificacoes %}
+            {% for notificacao in notificacoes %}
+                <div class="notificacao">
+                    {{ notificacao }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <hr>
+
+        <h2>Estado Atual da Estrutura (Lista de Tarefas)</h2>
+        {% if tarefas %}
+            {% for tarefa in tarefas %}
+                <div class="tarefa {{ tarefa.prioridade }}">
+                    <h3>{{ tarefa.titulo }}</h3>
+                    <p>{{ tarefa.descricao }}</p>
+                    <p><strong>Entrega:</strong> {{ tarefa.data_entrega }}</p>
+                    <p><strong>Prioridade:</strong> {{ tarefa.prioridade }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="sem-tarefas">Nenhuma tarefa cadastrada.</p>
+        {% endif %}
+
+        <a href="/" class="botao-desfazer">Voltar ao Menu Principal</a>
+    </div>
+</body>
+</html>

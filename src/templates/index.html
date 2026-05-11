@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Acadêmica</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Agenda Acadêmica</h1>
+
+        {% if feedback %}
+        <div class="notificacao">
+            {{ feedback }}
+        </div>
+        {% endif %}
+
+        {% if notificacoes %}
+            {% for notificacao in notificacoes %}
+                <div class="notificacao">
+                    {{ notificacao }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="formulario">
+            <h2>Nova Tarefa</h2>
+            <form action="/criar" method="POST">
+                <input type="text" name="titulo" placeholder="Título da tarefa" required>
+                <textarea name="descricao" placeholder="Descrição da tarefa" required></textarea>
+                <input type="date" name="data_entrega" required>
+                <select name="prioridade">
+                    <option value="Alta">Alta</option>
+                    <option value="Média">Média</option>
+                    <option value="Baixa">Baixa</option>
+                </select>
+                <button type="submit">Salvar Tarefa</button>
+            </form>
+
+            <div class="upload-section">
+                <form action="/importar" method="POST" enctype="multipart/form-data">
+                    <label for="arquivo_tarefas" class="custom-file-upload" id="file-label">
+                        📁 Escolher arquivo (JSON, CSV, TXT)
+                    </label>
+                    <input type="file" id="arquivo_tarefas" name="arquivo_tarefas" accept=".json,.csv,.txt" required onchange="updateFileName()">
+                    
+                    <button type="submit" class="btn-importar">
+                        Importar Arquivo
+                    </button>
+                </form>
+            </div>
+
+            <a href="/desfazer" class="botao-desfazer">Desfazer Última Ação</a>
+        </div>
+
+        <hr>
+
+        <h2>Lista de Tarefas</h2>
+        {% if tarefas %}
+            {% for tarefa in tarefas %}
+            <div class="tarefa {{ tarefa.prioridade }}">
+                <h3>{{ tarefa.titulo }}</h3>
+                <p>{{ tarefa.descricao }}</p>
+                <p><strong>Entrega:</strong> {{ tarefa.data_entrega }}</p>
+                <p><strong>Prioridade:</strong> {{ tarefa.prioridade }}</p>
+                
+                <div class="acoes-tarefa">
+                    <a href="/editar/{{ tarefa.id }}">
+                        <button class="botao-editar">Editar</button>
+                    </a>
+                    <a href="/excluir/{{ tarefa.id }}">
+                        <button class="btn-excluir">Excluir</button>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="sem-tarefas">Nenhuma tarefa cadastrada.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function updateFileName() {
+            const input = document.getElementById('arquivo_tarefas');
+            const label = document.getElementById('file-label');
+            if (input.files.length > 0) {
+                label.innerText = "📄 " + input.files[0].name;
+                label.style.borderColor = "#2ecc71";
+                label.style.color = "#27ae60";
+            }
+        }
+    </script>
+</body>
+</html>

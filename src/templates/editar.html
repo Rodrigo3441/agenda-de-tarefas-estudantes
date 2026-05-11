@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Tarefa</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Editar Tarefa</h1>
+
+        <div class="formulario">
+
+            <form method="POST">
+
+                <input
+                    type="text"
+                    name="titulo"
+                    value="{{ tarefa.titulo }}"
+                    required
+                >
+
+                <textarea
+                    name="descricao"
+                    required
+                >{{ tarefa.descricao }}</textarea>
+
+                <input
+                    type="date"
+                    name="data_entrega"
+                    value="{{ tarefa.data_entrega }}"
+                    required
+                >
+
+                <select name="prioridade">
+
+                    <option
+                        value="Alta"
+                        {% if tarefa.prioridade == "Alta" %}
+                            selected
+                        {% endif %}
+                    >
+                        Alta
+                    </option>
+
+                    <option
+                        value="Média"
+                        {% if tarefa.prioridade == "Média" %}
+                            selected
+                        {% endif %}
+                    >
+                        Média
+                    </option>
+
+                    <option
+                        value="Baixa"
+                        {% if tarefa.prioridade == "Baixa" %}
+                            selected
+                        {% endif %}
+                    >
+                        Baixa
+                    </option>
+
+                </select>
+
+                <button type="submit">
+                    Salvar Alterações
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
