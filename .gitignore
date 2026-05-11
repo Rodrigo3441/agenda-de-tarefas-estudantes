@@ -1,10 +1,17 @@
+# Ambiente virtual
 venv/
+
+# Cache Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+
+# Ferramentas
 .pytest_cache/
 .mypy_cache/
+
+# Sistema
 .DS_Store
 Thumbs.db
+
+# Logs
 *.log
