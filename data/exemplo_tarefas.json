@@ -1,0 +1,14 @@
+[
+  {
+    "titulo": "Revisar capitulo de ED",
+    "descricao": "Ler listas e pilhas",
+    "data_entrega": "2026-05-20",
+    "prioridade": "Alta"
+  },
+  {
+    "titulo": "Entregar exercicios",
+    "descricao": "Submeter no portal",
+    "data_entrega": "2026-05-22",
+    "prioridade": "Media"
+  }
+]
