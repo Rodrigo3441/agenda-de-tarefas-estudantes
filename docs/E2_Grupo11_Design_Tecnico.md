@@ -363,4 +363,4 @@ Usuário abre `/index`, cria tarefa, vai para `/resultado`, volta ao menu, impor
 ---
 
 *Nome do arquivo de entrega: `E2_Grupo11_Design_Tecnico.md`*  
-*Este arquivo está na pasta `/doc` do repositório.*
+*Este arquivo está na pasta `/docs` do repositório.*
