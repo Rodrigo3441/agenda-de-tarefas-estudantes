@@ -192,8 +192,11 @@ flowchart TD
 │
 ├── tests/
 ├── data/
-├── doc/
+├── docs/
+    └── images/
 ├── README.md
+├── LICENSE
+├── requirements.txt
 └── .gitignore
 ```
 
