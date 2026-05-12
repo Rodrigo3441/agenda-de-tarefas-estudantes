@@ -67,8 +67,11 @@ Os dados são persistidos em banco de dados MySQL utilizando SQLAlchemy.
 │
 ├── tests/
 ├── data/
-├── doc/
+├── docs/
+    └── images/
 ├── README.md
+├── LICENSE
+├── requirements.txt
 └── .gitignore
 ```
 
