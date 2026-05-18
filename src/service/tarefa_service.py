@@ -13,7 +13,8 @@ undo_stack = UndoStack()
 # CRIAÇÃO DE UMA TAREFA
 # =========================
 def criar_tarefa(dados):
-    # Cria um objeto Tarefa a partir dos dados recebidos do formulário
+
+    # Cria um objeto Tarefa a partir dos dados recebidos
     nova_tarefa = Tarefa(
         titulo=dados.get("titulo"),
         descricao=dados.get("descricao"),
@@ -21,20 +22,18 @@ def criar_tarefa(dados):
         prioridade=dados.get("prioridade")
     )
 
-    # Adiciona no banco de dados
+    # Salva no banco
     db.session.add(nova_tarefa)
     db.session.commit()
 
-    # Retorna a tarefa criada
-    return nova_tarefa
-
-    # OBS: Esse trecho abaixo nunca será executado por causa do return
-    # (fica aqui apenas como tentativa de registrar ação na pilha)
+    # Registra ação na pilha de desfazer
     undo_stack.push({
         "acao": "criar",
         "titulo": nova_tarefa.titulo
     })
 
+    # Retorna a tarefa criada
+    return nova_tarefa
 
 # =========================
 # IMPORTAÇÃO DE TAREFAS POR ARQUIVO
