@@ -7,16 +7,17 @@ from core.undo_stack import UndoStack
 from core.fila_notificacao import FilaNotificacao
 from core.ordenacao import (
     merge_sort, 
-    insertion_sort, 
-    verificar_prazos
+    insertion_sort
 )
+
+from datetime import datetime
 
 # =========================
 # INICIALIZAÇÃO DO FLASK
 # =========================
 # Aqui criamos a aplicação Flask e configuramos a conexão com o banco MySQL
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:@localhost/agenda_academica"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:root@localhost:3307/agenda_academica"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Inicializa o banco de dados na aplicação
@@ -30,6 +31,36 @@ undo_stack = UndoStack()
 
 # Fila usada para gerenciar notificações (FIFO - First In, First Out)
 fila_notificacao = FilaNotificacao()
+
+# =========================
+# VERIFICAÇÃO DE PRAZOS
+# =========================
+def verificar_prazos(tarefas):
+    avisos = []
+
+    hoje = datetime.today().date()
+
+    for tarefa in tarefas:
+
+        # Converte para date caso venha como string
+        if isinstance(tarefa.data_entrega, str):
+            data_entrega = datetime.strptime(
+                tarefa.data_entrega,
+                "%Y-%m-%d"
+            ).date()
+        else:
+            data_entrega = tarefa.data_entrega
+
+        # Marca tarefa como vencida
+        tarefa.vencida = data_entrega < hoje
+
+        # Cria aviso
+        if tarefa.vencida:
+            avisos.append(
+                f"A tarefa '{tarefa.titulo}' está vencida. Recomenda-se excluir ou atualizar."
+            )
+
+    return avisos
 
 # =========================
 # CARREGAMENTO E ORGANIZAÇÃO DE DADOS
